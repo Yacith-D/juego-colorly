@@ -11,6 +11,20 @@ class Game:
         self.amarillo = amarillo
         self.reset = reset
        
+        self.secuencia = []
+        self.intentoDeAdivinarSecuencia = []
+        
+    def elegirModo(self):
+        while True:
+            respuesta = input(f'¿Adivinas o creas la secuencia? (Adivinar / Crear): ').strip().lower()
+            if respuesta not in ('adivinar', 'crear'):
+                print("Agrega una respuesta correcta.")
+            else:
+                if respuesta == 'adivinar':
+                    self.creaComputadora()
+                elif respuesta == 'crear':
+                    self.creaJugador()
+                break
 
 def main():
     Juego = Game(azul=(Fore.BLUE + " O "), rojo=(Fore.RED + " O "), amarillo=(Fore.YELLOW + " O "), verde=(Fore.GREEN + " O "), reset=Fore.RESET)
