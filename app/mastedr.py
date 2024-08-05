@@ -80,11 +80,43 @@ class Game:
                     print("¡La computadora ha ganado!")
                     print(''.join(eleccionComputadora))
                     break
-
-
+    def eleccionJugador(self):
+        posiblesOpciones = [self.rojo, self.azul, self.amarillo, self.verde]
+        eleccionJugador = []
+        intentos = 0
+        while True:
+            if intentos == 12:
+                print("Número máximo de intentos alcanzado.")
+                break
+            else:
+                opcion = input("Elige los colores de tu secuencia (r/b/y/g). Para terminar la secuencia, escribe 'done': ").strip().lower()
+                if opcion == 'done' and len(eleccionJugador) == 4:
+                    print("Secuencia finalizada.")
+                    print("|", "".join(eleccionJugador) + self.reset, "|")
+                    break
+                if len(eleccionJugador) >= 4:
+                    print("Ya has elegido 4 colores. Para finalizar, escribe 'done'.")
+                match opcion:
+                    case "r":
+                        eleccionJugador.append(posiblesOpciones[0])
+                    case "b":
+                        eleccionJugador.append(posiblesOpciones[1])
+                    case "y":
+                        eleccionJugador.append(posiblesOpciones[2])
+                    case "g":
+                        eleccionJugador.append(posiblesOpciones[3])
+                    case _:
+                        print("Introduzca una respuesta correcta.")
+                print("|", "".join(eleccionJugador) + self.reset, "|")
+                intentos += 1
+                if len(eleccionJugador) == 4:
+                    print("Final...")
+                    print("|", "".join(eleccionJugador) + self.reset, "|")
+                    break
 def main():
     Juego = Game(azul=(Fore.BLUE + " O "), rojo=(Fore.RED + " O "), amarillo=(Fore.YELLOW + " O "), verde=(Fore.GREEN + " O "), reset=Fore.RESET)
     Juego.elegirModo()
 if __name__ == "__main__":
     # Inicializador del archivo.
     main()
+
