@@ -3,7 +3,6 @@ from time import sleep
 import keyboard
 import random
 class Game:
-    #Juego, dividido en sus respectivas clases y métodos.
     def __init__(self, rojo, azul, verde, amarillo, reset):
         self.rojo = rojo
         self.azul = azul
@@ -45,7 +44,7 @@ class Game:
                         print("|", "".join(self.secuencia) + self.reset, "|")
                     case _:
                         print("Introduzca una respuesta correcta.")
-                        #En caso de haber alcanzado el limite de espacio.
+                       
                 if len(self.secuencia) == 4:
                     confirm = input(f"¿Confirmar secuencia? (S/N): ").strip().lower()
                     if confirm == "s":
@@ -54,6 +53,7 @@ class Game:
                     else:
                         self.secuencia = []
         return self.secuencia
+    
     def creaComputadora(self):
         while True:
             posiblesOpciones = [self.rojo, self.azul, self.amarillo, self.verde]
@@ -62,6 +62,7 @@ class Game:
                 print(''.join(self.secuencia) + self.reset)
                 self.eleccionJugador()
                 break
+            
     def eleccionAzar(self):
         posiblesOpciones = [self.rojo, self.azul, self.amarillo, self.verde]
         eleccionComputadora = []
@@ -80,6 +81,7 @@ class Game:
                     print("¡La computadora ha ganado!")
                     print(''.join(eleccionComputadora))
                     break
+                
     def eleccionJugador(self):
         posiblesOpciones = [self.rojo, self.azul, self.amarillo, self.verde]
         eleccionJugador = []
@@ -113,10 +115,10 @@ class Game:
                     print("Final...")
                     print("|", "".join(eleccionJugador) + self.reset, "|")
                     break
+                
 def main():
     Juego = Game(azul=(Fore.BLUE + " O "), rojo=(Fore.RED + " O "), amarillo=(Fore.YELLOW + " O "), verde=(Fore.GREEN + " O "), reset=Fore.RESET)
     Juego.elegirModo()
 if __name__ == "__main__":
-    # Inicializador del archivo.
     main()
 
