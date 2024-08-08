@@ -3,6 +3,12 @@ from time import sleep
 import random
 
 class Game:
+
+    #     self rojo: Representa el color rojo en formato colorama
+    #     self azul: Representa el color azul en formato colorama
+    #     self verde: Representa el color verde en formato colorama
+    #     self amarillo: Representa el color amarillo en formato colorama
+    #     self reset: Secuencia de reset de color para volver al color normal
     def __init__(self, rojo, azul, verde, amarillo, reset):
         self.rojo = rojo
         self.azul = azul
@@ -13,12 +19,18 @@ class Game:
         self.intentoDeAdivinarSecuencia = []
         self.tablero = [["O" for _ in range(4)] for _ in range(12)] 
 
+   
     def imprimir_tablero(self):
-        print("Tablero de juego:")
+        print("Tablero de juego:")  # funcion que muestra la tabla en consola
         for fila in self.tablero:
             print(' | '.join(fila))
         print()
 
+
+
+        #Actualiza el tablero con el resultado de cada intento
+        #fila: La fila en la que se debe actualizar el tablero
+        
     def actualizar_tablero(self, intento, fila):
         if 0 <= fila < len(self.tablero):
             resultado = []
@@ -46,7 +58,7 @@ class Game:
         while True:
             respuesta = input('¿Adivinas o creas la secuencia? (Adivinar / Crear): ').strip().lower()
             if respuesta == 'adivinar':
-                self.creaComputadora()
+                self.creaComputadora() #Permite al jugador elegir el modo de juego: 'Adivinar' o 'Crear'.
                 break
             elif respuesta == 'crear':
                 self.creaJugador()
@@ -55,6 +67,8 @@ class Game:
                 print("Respuesta no válida. Elige 'Adivinar' o 'Crear'.")
 
     def convertir_colores(self, secuencia):
+          # Convierte una secuencia de caracteres de colores a su representación en formato colorama
+        #returna una lista de color en formato colorama
         posiblesOpciones = [self.rojo, self.azul, self.amarillo, self.verde]
         colores = {
             "r": posiblesOpciones[0],
@@ -65,11 +79,16 @@ class Game:
         return [colores.get(color, None) for color in secuencia]
 
     def valida_secuencia(self, secuencia):
+         #Valida que la secuencia de colores tenga exactamente 4 colores y que todos sean correctos
+         #Se valida la secuencia de colores
+         # return True si la secuencia es válida, False en caso contrario
+         # se confirma si esta seguro de la secuencia a colocar
         return len(secuencia) == 4 and all(color in {"r", "b", "y", "g"} for color in secuencia)
 
     def creaJugador(self):
+        #Permite al jugador crear una secuencia de colores La secuencia es validada y confirmada antes de continuar
         while True:
-            opcion = input("Elige los colores de tu secuencia (r/b/y/g) separados por comas (ej. r,b,g,y): ").strip().lower()
+            opcion = input("Elige los colores de tu secuencia (r/b/y/g)separados por comas: ").strip().lower()
             secuencia = opcion.split(',')
             if self.valida_secuencia(secuencia):
                 self.secuencia = self.convertir_colores(secuencia)
@@ -82,13 +101,16 @@ class Game:
             else:
                 print("Introduzca exactamente 4 colores válidos (r/b/y/g).")
                 
-    def creaComputadora(self):       
+    def creaComputadora(self):  
+        #Genera una secuencia aleatoria de colores para la computadora y permite al jugador intentar adivinarla     
         posiblesOpciones = [self.rojo, self.azul, self.amarillo, self.verde]
         self.secuencia = [random.choice(posiblesOpciones) for _ in range(4)]
         print('Combinación de la computadora es: ', ''.join(self.secuencia) + self.reset)
         self.eleccionJugador()
     
     def eleccionAzar(self):
+        #La computadora hace intentos aleatorios para adivinar la secuencia del jugador. El tablero se actualiza con cada intento.
+        # muestra si gana la computadora o ha perdido
         posiblesOpciones = [self.rojo, self.azul, self.amarillo, self.verde]
         for intento in range(12):
             sleep(1)
@@ -105,6 +127,7 @@ class Game:
             print("La computadora no ha podido adivinar. ¡Has ganado!")
 
     def eleccionJugador(self):
+       # Permite al jugador hacer intentos para adivinar la secuencia generada por la computadora. El tablero se actualiza con cada intento
         posiblesOpciones = [self.rojo, self.azul, self.amarillo, self.verde]
         for intento in range(12):
             opcion = input("Elige los colores de tu secuencia (r/b/y/g) separados por comas (ej. r,b,g,y) o escribe 'done' para terminar: ").strip().lower()
@@ -128,6 +151,7 @@ class Game:
             print("Número máximo de intentos alcanzado.")
 
 def main():
+    #Función que inicializa el juego y permite al jugador elegir el modo
     juego = Game(
         azul=(Fore.BLUE + " O "),
         rojo=(Fore.RED + " O "),
